@@ -166,44 +166,95 @@
                     <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.4s">
                         <div>
                             
-                            <form action="contact.php" method="post">
+                            <form method="post">
                                 <div class="row g-3">
                                     <div class="col-lg-12 col-xl-6">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control border-0" id="name" placeholder="Your Name" name="name" value=""><span id="error"><?php if(isset($name_error)) echo " Enter you name!!";  ?></span>
+                                            <input type="text" class="form-control border-0" id="name" placeholder="Your Name" name="name" value="" required><span id="error">
                                             <label for="name">
-                                                Your Name
+                                                <?php if(isset($name_error)){?>
+                                                <span style="color: red;font-style: italic;">Your Name <br>
+                                                    enter your name!
+                                                </span>
+                                                <?php }else{ ?>
+                                                    Your Name
+                                                <?php }?>
+                                                
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-xl-6">
                                         <div class="form-floating">
-                                            <input type="email" class="form-control border-0" id="email" placeholder="Your Email" name="email" value="">
-                                            <label for="email">Your Email</label>
+                                            <input type="email" class="form-control border-0" id="email" placeholder="Your Email" name="email" value="" required>
+                                            <label for="email">
+                                                <?php if(isset($email_error)){?>
+                                                <span style="color: red;font-style: italic;">Your Email <br>
+                                                    enter your email!
+                                                </span>
+                                                <?php }else{ ?>
+                                                    Your Email
+                                                <?php }?>
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-xl-6">
                                         <div class="form-floating">
-                                            <input type="tel" class="form-control border-0" id="phone" placeholder="Phone" name="phonenumber" value="">
-                                            <label for="phone">Your Phone</label>
+                                            <input type="tel" class="form-control border-0" id="phone" placeholder="Phone" name="phonenumber" value="" required>
+                                            <label for="phone">
+                                                <?php if(isset($email_error)){?>
+                                                <span style="color: red;font-style: italic;">Your Email <br>
+                                                    enter your email!
+                                                </span>
+                                                <?php }else{ ?>
+                                                    Your Email
+                                                <?php }?>
+                                                Your Phone
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-xl-6">
                                         <div class="form-floating">
-                                            <input type="date" class="form-control border-0" id="project" placeholder="Date" name="date">
-                                            <label for="project">Booking Date</label>
+                                            <input type="date" class="form-control border-0" id="project" placeholder="Date" name="date" required>
+                                            <label for="project">
+                                                <?php if(isset($email_error)){?>
+                                                <span style="color: red;font-style: italic;">Your Email <br>
+                                                    enter your email!
+                                                </span>
+                                                <?php }else{ ?>
+                                                    Your Email
+                                                <?php }?>
+                                                Booking Date
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control border-0" id="subject" placeholder="Subject" name="subject">
-                                            <label for="subject">Subject</label>
+                                            <input type="text" class="form-control border-0" id="subject" placeholder="Subject" name="subject" required>
+                                            <label for="subject">
+                                                <?php if(isset($email_error)){?>
+                                                <span style="color: red;font-style: italic;">Your Email <br>
+                                                    enter your email!
+                                                </span>
+                                                <?php }else{ ?>
+                                                    Your Email
+                                                <?php }?>
+                                                Subject
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <textarea class="form-control border-0" placeholder="Leave a message here" id="message" name="message" style="height: 120px"></textarea>
-                                            <label for="message">Message</label>
+                                            <textarea class="form-control border-0" placeholder="Leave a message here" id="message" name="message" required style="height: 120px"></textarea>
+                                            <label for="message">
+                                                <?php if(isset($email_error)){?>
+                                                <span style="color: red;font-style: italic;">Your Email <br>
+                                                    Invalid input!
+                                                </span>
+                                                <?php }else{ ?>
+                                                    Your Email
+                                                <?php }?>
+                                                Message
+                                            </label>
                                         </div>
 
                                     </div>
