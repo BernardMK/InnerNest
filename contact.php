@@ -171,7 +171,7 @@
                     <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.4s">
                         <div>
                             
-                            <form action="contact.php" method="post">
+                            <form method="post">
                                 <div class="row g-3">
                                     <div class="col-lg-12 col-xl-6">
                                         <div class="form-floating">
@@ -249,7 +249,7 @@
 
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn btn-primary w-100 py-3">Send Message</button>
+                                        <input type="submit" class="btn btn-primary w-100 py-3">
                                     </div>
                                 </div>
                             </form>
