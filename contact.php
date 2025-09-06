@@ -298,7 +298,7 @@
                                 </div>
                                 <div>
                                     <h4>Address</h4>
-                                    <p class="mb-0"><a href="https://www.google.com/maps/dir//City+Mental+Health+Counseling,+PLLC,+171+Madison+Ave,+New+York,+NY+10016/@40.0818176,-82.919424,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x89c25f341d464d4f:0x9a05060cf8eef173!2m2!1d-73.983134!2d40.7471517?hl=en&entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D">171 Madison Ave, New York, NY 10016</a></p>
+                                    <p class="mb-0"><a href="https://www.google.com/maps/place/370+W+12th+Ave,+Columbus,+OH+43210,+USA/@39.9964748,-83.0205498,17z/data=!3m1!4b1!4m5!3m4!1s0x88388eeb313df115:0x8ec6ddca595f108e!8m2!3d39.9964748!4d-83.0179749?hl=en&entry=ttu&g_ep=EgoyMDI1MDkwMy4wIKXMDSoASAFQAw%3D%3D">370 W 12th Ave, Columbus, OH 43210</a></p>
                                 </div>
                             </div>
                         </div>
@@ -308,8 +308,11 @@
                 <div class="col-12 wow fadeInUp" data-wow-delay="0.2s">
                     <div class="rounded">
                         <iframe class="rounded w-100" 
-                        style="height: 400px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387191.33750346623!2d-73.97968099999999!3d40.6974881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sbd!4v1694259649153!5m2!1sen!2sbd" 
-                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        style="height: 400px;" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3047.9876543210987!2d-83.0345678!3d39.9987654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88388f123456789a:0xabcdef0123456789!2sThe%20Ohio%20State%20University%20Wexner%20Medical%20Center%2C%20370%20W%2012th%20Ave%2C%20Columbus%2C%20OH%2043210!5e0!3m2!1sen!2sus!4v1694259649153!5m2!1sen!2sus" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
                 </div>
             </div>
