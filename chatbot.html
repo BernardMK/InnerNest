@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPA Mental Health Support Chatbot</title>
+<style>
+/* ------------  All your CSS (unchanged)  ------------ */
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;background:linear-gradient(135deg,#f0f8ff 0%,#ffffff 50%,#f0fff0 100%);min-height:100vh}
+.header{background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.1);border-bottom:1px solid #e5e5e5}
+.header-content{max-width:1024px;margin:auto;padding:16px;display:flex;align-items:center;gap:12px}
+.header-icon{background:#dbeafe;padding:8px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.header-icon svg{width:24px;height:24px;color:#2563eb}
+.header-text h1{font-size:1.25rem;font-weight:600;color:#1f2937;margin-bottom:2px}
+.header-text p{font-size:.875rem;color:#6b7280}
+.crisis-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:16px}
+.crisis-modal.active{display:flex}
+.crisis-content{background:#fff;border-radius:8px;padding:24px;max-width:400px;width:100%}
+.crisis-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.crisis-header svg{width:32px;height:32px;color:#dc2626}
+.crisis-header h2{font-size:1.25rem;font-weight:600;color:#1f2937}
+.crisis-info{background:#fef2f2;padding:16px;border-radius:8px;margin-bottom:16px}
+.crisis-info h3{font-weight:600;color:#991b1b;margin-bottom:8px}
+.crisis-hotline{display:flex;align-items:center;gap:8px;color:#991b1b;font-size:.875rem;margin-bottom:8px}
+.crisis-hotline svg{width:16px;height:16px}
+.crisis-close{width:100%;background:#2563eb;color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:1rem;cursor:pointer;transition:background .2s}
+.crisis-close:hover{background:#1d4ed8}
+.main-container{max-width:1024px;margin:auto;padding:16px;height:calc(100vh - 120px);display:flex;flex-direction:column}
+.disclaimer{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px;margin-bottom:16px;display:flex;align-items:flex-start;gap:8px}
+.disclaimer svg{width:20px;height:20px;color:#2563eb;margin-top:2px;flex-shrink:0}
+.disclaimer-text{font-size:.875rem;color:#1e40af}
+.chat-container{flex:1;background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.1);border:1px solid #e5e5e5;display:flex;flex-direction:column;overflow:hidden}
+.messages-area{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px}
+.message{display:flex;gap:12px}
+.message.user{flex-direction:row-reverse}
+.message-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.message.user .message-avatar{background:#2563eb;color:#fff}
+.message.assistant .message-avatar{background:#dcfce7;color:#16a34a}
+.message-avatar svg{width:16px;height:16px}
+.message-content{max-width:70%}
+.message.user .message-content{text-align:right}
+.message-bubble{padding:12px;border-radius:8px;margin-bottom:4px}
+.message.user .message-bubble{background:#2563eb;color:#fff}
+.message.assistant .message-bubble{background:#f3f4f6;color:#1f2937}
+.message-time{font-size:.75rem;color:#6b7280}
+.typing-indicator{display:none;gap:12px}
+.typing-indicator.active{display:flex}
+.typing-indicator .message-avatar{background:#dcfce7;color:#16a34a}
+.typing-dots{background:#f3f4f6;border-radius:8px;padding:12px;display:flex;gap:4px}
+.typing-dot{width:8px;height:8px;background:#6b7280;border-radius:50%;animation:bounce 1.4s infinite ease-in-out}
+.typing-dot:nth-child(2){animation-delay:.1s}
+.typing-dot:nth-child(3){animation-delay:.2s}
+@keyframes bounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+.input-area{border-top:1px solid #e5e5e5;padding:16px;background:#f9fafb}
+.input-row{display:flex;gap:8px}
+.message-input{flex:1;border:1px solid #d1d5db;border-radius:8px;padding:8px 12px;font-size:1rem;font-family:inherit;resize:vertical;min-height:40px;max-height:120px;outline:none;transition:border-color .2s}
+.message-input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.send-button{background:#2563eb;color:#fff;border:none;border-radius:8px;padding:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.send-button:hover:not(:disabled){background:#1d4ed8}
+.send-button:disabled{opacity:.5;cursor:not-allowed}
+.send-button svg{width:20px;height:20px}
+.quick-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.quick-action{background:#e5e7eb;color:#374151;border:none;padding:4px 12px;border-radius:20px;font-size:.75rem;cursor:pointer;transition:background .2s}
+.quick-action:hover{background:#d1d5db}
+@media(max-width:640px){.main-container{padding:8px}.message-content{max-width:85%}}
+</style>
+</head>
+<body>
+<!-- Header -->
+<div class="header">
+  <div class="header-content">
+    <a href="index.html"><button>Back</button></a>
+    <div class="header-icon">
+      <svg fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
+      </svg>
+      
+    </div>
+    
+    
+    <div class="header-text">
+      <h1>Mental Health Support</h1>
+      <p>Confidential AI support • Available 24/7</p>
+    </div>
+  </div>
+</div>
+
+<!-- Crisis Modal -->
+<div class="crisis-modal" id="crisisModal">
+  <div class="crisis-content">
+    <div class="crisis-header">
+      <svg fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+      </svg>
+      <h2>Immediate Help Available</h2>
+    </div>
+    <div class="crisis-info">
+      <h3>Crisis Hotlines:</h3>
+      <div class="crisis-hotline">
+        <svg fill="currentColor" viewBox="0 0 20 20">
+          <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+        </svg>
+        <span>988 - Suicide & Crisis Lifeline</span>
+      </div>
+      <div class="crisis-hotline">
+        <svg fill="currentColor" viewBox="0 0 20 20">
+          <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+        </svg>
+        <span>741741 - Crisis Text Line (Text HOME)</span>
+      </div>
+    </div>
+    <p style="font-size:.875rem;color:#6b7280;margin-bottom:16px;">If you're in immediate danger, please call 911 or go to your nearest emergency room.</p>
+    <button class="crisis-close" onclick="closeCrisisModal()">Continue Conversation</button>
+  </div>
+</div>
+
+<!-- Main Container -->
+<div class="main-container">
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <svg fill="currentColor" viewBox="0 0 20 20">
+      <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+    </svg>
+    <div class="disclaimer-text"><strong>Important:</strong> This chatbot provides peer support and resources, not professional therapy. For emergencies, call 988 (Suicide & Crisis Lifeline) or 911.</div>
+  </div>
+
+  <!-- Chat Container -->
+  <div class="chat-container">
+    <div class="messages-area" id="messagesArea">
+      <div class="message assistant">
+        <div class="message-avatar">
+          <svg fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <div class="message-content">
+          <div class="message-bubble">Hello! I'm here to provide mental health support and resources. I'm not a replacement for professional help, but I can offer a listening ear and helpful information. How are you feeling today?</div>
+          <div class="message-time" id="initialTime"></div>
+        </div>
+      </div>
+
+      <div class="typing-indicator" id="typingIndicator">
+        <div class="message-avatar">
+          <svg fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <div class="typing-dots">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-area">
+      <div class="input-row">
+        <textarea class="message-input" id="messageInput" placeholder="Share what's on your mind..." rows="1"></textarea>
+        <button class="send-button" id="sendButton" onclick="sendMessage()">
+          <svg fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="quick-actions">
+        <button class="quick-action" onclick="handleQuickAction('anxiety')">Anxiety Help</button>
+        <button class="quick-action" onclick="handleQuickAction('depression')">Feeling Down</button>
+        <button class="quick-action" onclick="handleQuickAction('stress')">Stress Relief</button>
+        <button class="quick-action" onclick="handleQuickAction('crisis')">Crisis Support</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function() {
+  // Set initial time
+  const initialTimeElement = document.getElementById('initialTime');
+  if (initialTimeElement) {
+    initialTimeElement.textContent = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  }
+  
+  // Set up enter key handling
+  const messageInput = document.getElementById('messageInput');
+  messageInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+  
+  // Auto-resize textarea
+  messageInput.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  });
+});
+
+// Conversation history storage
+const conversationHistory = [
+  { role: "system", content: "You are a supportive mental health chatbot for BPA Mental Health Support. Provide empathetic, helpful responses while being clear that you're not a replacement for professional therapy. Keep responses concise but caring. If someone mentions crisis situations, acknowledge their pain and gently suggest professional help or crisis hotlines." }
+];
+
+// Mental health response templates
+const mentalHealthResponses = {
+  anxiety: [
+    "I understand anxiety can feel overwhelming. Try this breathing exercise: breathe in for 4 counts, hold for 4, exhale for 6. This activates your body's relaxation response.",
+    "Anxiety often comes from our mind focusing on 'what if' scenarios. Try grounding yourself by naming 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, and 1 you can taste.",
+    "Remember that anxiety is temporary, even when it doesn't feel that way. You've gotten through difficult moments before, and you can get through this one too."
+  ],
+  depression: [
+    "I hear that you're struggling right now. Depression can make everything feel harder, but please know that what you're feeling is valid and you don't have to face this alone.",
+    "When we're feeling down, small steps can make a big difference. Even something as simple as getting sunlight, taking a short walk, or reaching out to a friend can help.",
+    "Depression often tells us lies about ourselves and our worth. You matter, and your feelings are important. Consider talking to a counselor who can provide professional support."
+  ],
+  stress: [
+    "Stress is your body's way of responding to challenges. Let's try a quick stress-relief technique: tense all your muscles for 5 seconds, then release and notice the relaxation.",
+    "When stressed, our perspective can narrow. Try asking yourself: 'Will this matter in 5 years?' Sometimes this helps put things in context.",
+    "Stress management is a skill that improves with practice. Regular exercise, adequate sleep, and mindfulness can build your resilience over time."
+  ],
+  crisis: [
+    "I'm concerned about what you're going through. Please know that you're not alone, and there are people who want to help. The 988 Suicide & Crisis Lifeline (call or text 988) is available 24/7.",
+    "If you're having thoughts of hurting yourself or others, please reach out for immediate help. You can call 988, text 'HOME' to 741741, or go to your nearest emergency room.",
+    "Crisis situations feel overwhelming, but they are temporary. Professional crisis counselors are trained to help people through these exact situations."
+  ],
+  general: [
+    "Thank you for sharing that with me. It takes courage to open up about how you're feeling.",
+    "I'm here to listen and support you. What you're experiencing is valid, and it's okay to not be okay sometimes.",
+    "Remember that seeking help is a sign of strength, not weakness. Taking care of your mental health is just as important as taking care of your physical health.",
+    "You're taking a positive step by reaching out. How else can I support you today?",
+    "It sounds like you're dealing with a lot right now. What feels most pressing or concerning to you?"
+  ]
+};
+
+function detectCrisisKeywords(message) {
+  const crisisKeywords = ['suicide', 'kill myself', 'end it all', 'hurt myself', 'self-harm', 'not worth living', 'better off dead', 'want to die'];
+  return crisisKeywords.some(keyword => message.toLowerCase().includes(keyword));
+}
+
+function detectEmotionKeywords(message) {
+  const lowerMessage = message.toLowerCase();
+  
+  if (lowerMessage.includes('anxious') || lowerMessage.includes('worry') || lowerMessage.includes('panic') || lowerMessage.includes('nervous')) {
+    return 'anxiety';
+  }
+  if (lowerMessage.includes('depressed') || lowerMessage.includes('sad') || lowerMessage.includes('hopeless') || lowerMessage.includes('down')) {
+    return 'depression';
+  }
+  if (lowerMessage.includes('stressed') || lowerMessage.includes('overwhelmed') || lowerMessage.includes('pressure')) {
+    return 'stress';
+  }
+  return 'general';
+}
+
+function generateResponse(userMessage) {
+  // Check for crisis keywords first
+  if (detectCrisisKeywords(userMessage)) {
+    showCrisisModal();
+    return getRandomResponse('crisis');
+  }
+  
+  // Detect emotion and respond accordingly
+  const emotion = detectEmotionKeywords(userMessage);
+  return getRandomResponse(emotion);
+}
+
+function getRandomResponse(category) {
+  const responses = mentalHealthResponses[category] || mentalHealthResponses.general;
+  return responses[Math.floor(Math.random() * responses.length)];
+}
+
+function addMessage(sender, text) {
+  const messagesArea = document.getElementById("messagesArea");
+  const messageDiv = document.createElement("div");
+  messageDiv.className = `message ${sender}`;
+
+  const avatarSvg = sender === 'user' 
+    ? `<svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>`
+    : `<svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd"/></svg>`;
+
+  messageDiv.innerHTML = `
+    <div class="message-avatar">${avatarSvg}</div>
+    <div class="message-content">
+      <div class="message-bubble">${text}</div>
+      <div class="message-time">${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>
+    </div>
+  `;
+
+  messagesArea.appendChild(messageDiv);
+  messagesArea.scrollTop = messagesArea.scrollHeight;
+}
+
+function showTyping() {
+  const typingIndicator = document.getElementById("typingIndicator");
+  typingIndicator.classList.add("active");
+  document.getElementById("messagesArea").scrollTop = document.getElementById("messagesArea").scrollHeight;
+}
+
+function hideTyping() {
+  document.getElementById("typingIndicator").classList.remove("active");
+}
+
+function showCrisisModal() {
+  document.getElementById("crisisModal").classList.add("active");
+}
+
+function closeCrisisModal() {
+  document.getElementById("crisisModal").classList.remove("active");
+}
+
+async function sendMessage() {
+  const messageInput = document.getElementById("messageInput");
+  const sendButton = document.getElementById("sendButton");
+  const message = messageInput.value.trim();
+  
+  if (!message) return;
+
+  // Disable input while processing
+  messageInput.disabled = true;
+  sendButton.disabled = true;
+
+  // Add user message
+  addMessage("user", message);
+  conversationHistory.push({ role: "user", content: message });
+  
+  // Clear input
+  messageInput.value = "";
+  messageInput.style.height = "auto";
+
+  // Show typing indicator
+  showTyping();
+
+  try {
+    // Simulate AI response with Claude API
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: conversationHistory
+      })
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const assistantResponse = data.content[0].text;
+      
+      hideTyping();
+      addMessage("assistant", assistantResponse);
+      conversationHistory.push({ role: "assistant", content: assistantResponse });
+    } else {
+      throw new Error("API request failed");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    // Fallback to rule-based response
+    hideTyping();
+    const fallbackResponse = generateResponse(message);
+    addMessage("assistant", fallbackResponse);
+    conversationHistory.push({ role: "assistant", content: fallbackResponse });
+  }
+
+  // Re-enable input
+  messageInput.disabled = false;
+  sendButton.disabled = false;
+  messageInput.focus();
+}
+
+function handleQuickAction(type) {
+  const quickMessages = {
+    anxiety: "I'm feeling really anxious right now and could use some help managing it.",
+    depression: "I've been feeling down lately and struggling with motivation.",
+    stress: "I'm feeling overwhelmed with stress and need some coping strategies.",
+    crisis: "I'm in crisis and need immediate support resources."
+  };
+  
+  const messageInput = document.getElementById("messageInput");
+  messageInput.value = quickMessages[type] || "";
+  messageInput.focus();
+  
+  // Auto-send the quick action message
+  sendMessage();
+}
+
+// Handle Enter key in textarea
+document.addEventListener('DOMContentLoaded', function() {
+  const messageInput = document.getElementById('messageInput');
+  messageInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+});
+</script>
+
+</body>
+</html>
