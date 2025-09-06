@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BPA Mental Health Support Chatbot</title>
 <style>
+  #back_button{
+    background-color: #1e40af;
+    height: 50px;
+    width: 50px;
+    border-radius: 3px;
+    color: white;
+  }
 /* ------------  All your CSS (unchanged)  ------------ */
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;background:linear-gradient(135deg,#f0f8ff 0%,#ffffff 50%,#f0fff0 100%);min-height:100vh}
@@ -64,13 +71,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;bac
 .quick-action{background:#e5e7eb;color:#374151;border:none;padding:4px 12px;border-radius:20px;font-size:.75rem;cursor:pointer;transition:background .2s}
 .quick-action:hover{background:#d1d5db}
 @media(max-width:640px){.main-container{padding:8px}.message-content{max-width:85%}}
+
 </style>
 </head>
 <body>
 <!-- Header -->
 <div class="header">
   <div class="header-content">
-    <a href="index.html"><button>Back</button></a>
+    <a href="index.html"><button id="back_button">Back</button></a>
     <div class="header-icon">
       <svg fill="currentColor" viewBox="0 0 20 20">
         <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
