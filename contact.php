@@ -8,42 +8,42 @@
     $message = "";
     $error = false;
 
-    if($_SERVER["REQUEST_METHOD"] == "post"){
-        if(!empty($_POST["name"])){
-        $name = $_POST["name"];
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        if(!empty($_POST["name"]) && strlen($_POST["name"]) > 1 && strlen($_POST["name"]) <= 100){
+            $name = $_POST["name"];
         }else{
-        $error = true;
-        $name_error = true;
+            $error = true;
+            $name_error = true;
         }
         if(!empty($_POST["email"])){
-        $email = $_POST["email"];
+            $email = $_POST["email"];   
         }else{
-        $error = true;
-        $email_error = true;
+            $error = true;
+            $email_error = true;
         }
         if(!empty($_POST["phonenumber"])){
-        $phonenumber = $_POST["phonenumber"];
+            $phonenumber = $_POST["phonenumber"];
         }else{
-        $error = true;
-        $phonenumber_error = true;
+            $error = true;
+            $phonenumber_error = true;
         }
         if(!empty($_POST["date"])){
-        $booking_date = $_POST["date"];
+            $booking_date = $_POST["date"];
         }else{
-        $error = true;
-        $booking_date_error = true;
+            $error = true;
+            $booking_date_error = true;
         }
         if(!empty($_POST["subject"])){
-        $subject = $_POST["subject"];
+            $subject = $_POST["subject"];
         }else{
-        $error = true;
-        $subject_error = true;
+            $error = true;
+            $subject_error = true;
         }
         if(!empty($_POST["message"])){
-        $message = $_POST["message"];
+            $message = $_POST["message"];
         }else{
-        $error = true;
-        $message_error = true;
+            $error = true;
+            $message_error = true;
         }
     }
     
@@ -201,14 +201,14 @@
                                         <div class="form-floating">
                                             <input type="tel" class="form-control border-0" id="phone" placeholder="Phone" name="phonenumber" value="" required>
                                             <label for="phone">
-                                                <?php if(isset($email_error)){?>
-                                                <span style="color: red;font-style: italic;">Your Email <br>
-                                                    enter your email!
+                                                <?php if(isset($phonenumber_error)){?>
+                                                <span style="color: red;font-style: italic;">Your Phone <br>
+                                                    Invalid phonenumber
                                                 </span>
                                                 <?php }else{ ?>
-                                                    Your Email
+                                                    Your Phone
                                                 <?php }?>
-                                                Your Phone
+                                                
                                             </label>
                                         </div>
                                     </div>
@@ -216,14 +216,14 @@
                                         <div class="form-floating">
                                             <input type="date" class="form-control border-0" id="project" placeholder="Date" name="date" required>
                                             <label for="project">
-                                                <?php if(isset($email_error)){?>
-                                                <span style="color: red;font-style: italic;">Your Email <br>
-                                                    enter your email!
+                                                <?php if(isset($booking_date_error)){?>
+                                                <span style="color: red;font-style: italic;">Booking Date <br>
+                                                    invalid Booking date!!
                                                 </span>
                                                 <?php }else{ ?>
-                                                    Your Email
+                                                    Booking Date
                                                 <?php }?>
-                                                Booking Date
+                                                
                                             </label>
                                         </div>
                                     </div>
@@ -231,12 +231,12 @@
                                         <div class="form-floating">
                                             <input type="text" class="form-control border-0" id="subject" placeholder="Subject" name="subject" required>
                                             <label for="subject">
-                                                <?php if(isset($email_error)){?>
-                                                <span style="color: red;font-style: italic;">Your Email <br>
-                                                    enter your email!
+                                                <?php if(isset($subject_error)){?>
+                                                <span style="color: red;font-style: italic;">Subject <br>
+                                                    Invalid input!!
                                                 </span>
                                                 <?php }else{ ?>
-                                                    Your Email
+                                                    Subject
                                                 <?php }?>
                                                 Subject
                                             </label>
@@ -246,14 +246,14 @@
                                         <div class="form-floating">
                                             <textarea class="form-control border-0" placeholder="Leave a message here" id="message" name="message" required style="height: 120px"></textarea>
                                             <label for="message">
-                                                <?php if(isset($email_error)){?>
-                                                <span style="color: red;font-style: italic;">Your Email <br>
+                                                <?php if(isset($message_error)){?>
+                                                <span style="color: red;font-style: italic;">Message <br>
                                                     Invalid input!
                                                 </span>
                                                 <?php }else{ ?>
-                                                    Your Email
+                                                    Message
                                                 <?php }?>
-                                                Message
+                                                
                                             </label>
                                         </div>
 
