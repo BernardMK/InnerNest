@@ -876,3 +876,6 @@
 .footer .footer-item .footer-btn a:hover i {
     color: var(--bs-white);
 }
+#d_container{
+    margin-bottom: 20px;
+}
