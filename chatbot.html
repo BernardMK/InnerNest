@@ -45,11 +45,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;bac
 .message-avatar svg{width:16px;height:16px}
 .message-content{max-width:70%}
 .message.user .message-content{text-align:right}
-<<<<<<< HEAD
 .message-bubble{padding:12px;border-radius:8px;margin-bottom:4px;word-wrap:break-word}
-=======
-.message-bubble{padding:12px;border-radius:8px;margin-bottom:4px;line-height:1.5}
->>>>>>> 5f9967504e078ed741250488fdb5b5af3e277287
 .message.user .message-bubble{background:#2563eb;color:#fff}
 .message.assistant .message-bubble{background:#f3f4f6;color:#1f2937}
 .message-time{font-size:.75rem;color:#6b7280}
@@ -124,13 +120,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;bac
         <button class="quick-response" onclick="sendQuickResponse('I feel overwhelmed')">I feel overwhelmed</button>
       </div>
       <div class="input-row">
-<<<<<<< HEAD
-        <textarea class="message-input" id="messageInput" placeholder="Type..." rows="1"></textarea>
-        <button class="send-button" id="sendButton" onclick="sendMessage()" disabled>Send</button>
-=======
         <textarea class="message-input" id="messageInput" placeholder="Share what's on your mind..." rows="1"></textarea>
         <button class="send-button" id="sendButton" onclick="sendMessage()">Send</button>
->>>>>>> 5f9967504e078ed741250488fdb5b5af3e277287
       </div>
     </div>
   </div>
@@ -315,13 +306,7 @@ function renderMessages() {
       '<svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg>';
     
     messageDiv.innerHTML = `
-<<<<<<< HEAD
-      <div class="message-avatar">
-        ${msg.sender === "user" ? "😊" : "🤖"}
-      </div>
-=======
       <div class="message-avatar">${avatarSvg}</div>
->>>>>>> 5f9967504e078ed741250488fdb5b5af3e277287
       <div class="message-content">
         <div class="message-bubble">${msg.text}</div>
         <div class="message-time">${msg.time}</div>
@@ -367,11 +352,7 @@ function sendMessage() {
     
     const reply = {
       sender: "assistant",
-<<<<<<< HEAD
-      text: "I hear you. You're not alone in this 💙",
-=======
       text: responseText,
->>>>>>> 5f9967504e078ed741250488fdb5b5af3e277287
       time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
     };
     
@@ -394,19 +375,6 @@ function sendMessage() {
   }, 1500 + Math.random() * 1000); // Variable delay for more natural feel
 }
 
-<<<<<<< HEAD
-// Enable/disable Send button dynamically
-document.getElementById("messageInput").addEventListener("input", (e) => {
-  document.getElementById("sendButton").disabled = !e.target.value.trim();
-});
-
-// Allow Enter key to send
-document.getElementById("messageInput").addEventListener("keypress", (e) => {
-  if (e.key === "Enter" && !e.shiftKey) {
-    e.preventDefault();
-    sendMessage();
-  }
-=======
 function sendQuickResponse(text) {
   document.getElementById("messageInput").value = text;
   sendMessage();
@@ -435,7 +403,6 @@ document.addEventListener('DOMContentLoaded', function() {
       joinRoom();
     }
   });
->>>>>>> 5f9967504e078ed741250488fdb5b5af3e277287
 });
 </script>
 </body>
