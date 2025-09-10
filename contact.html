@@ -1,85 +1,3 @@
-<?php
-
-  $name = "";
-  $email = "";
-  $phonenumber = "";
-  $booking_date = "";
-  $subject = "";
-  $message = "";
-  $error = false;
-  $name_error = false;
-  $email_error = false;
-  $phonenumber_error = false;
-  $booking_date_error = false;
-  $subject_error = false;
-  $message_error = false;
-  $success = false;
-
-  if($_SERVER["REQUEST_METHOD"] == "POST"){  // Fixed: Changed "post" to "POST"
-    
-    // Validate name
-    if(!empty($_POST["name"]) && strlen(trim($_POST["name"])) > 1){
-      $name = htmlspecialchars(trim($_POST["name"]));
-    }else{
-      $error = true;
-      $name_error = true;
-    }
-    
-    // Validate email
-    if(!empty($_POST["email"]) && filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
-      $email = htmlspecialchars(trim($_POST["email"]));
-    }else{
-      $error = true;
-      $email_error = true;
-    }
-    
-    // Validate phone number
-    if(!empty($_POST["phonenumber"]) && strlen(trim($_POST["phonenumber"])) >= 10){
-      $phonenumber = htmlspecialchars(trim($_POST["phonenumber"]));
-    }else{
-      $error = true;
-      $phonenumber_error = true;
-    }
-    
-    // Validate date
-    if(!empty($_POST["date"])){
-      $booking_date = htmlspecialchars($_POST["date"]);
-      // Optional: Check if date is in the future
-      if(strtotime($booking_date) < strtotime('today')){
-        $error = true;
-        $booking_date_error = true;
-      }
-    }else{
-      $error = true;
-      $booking_date_error = true;
-    }
-    
-    // Validate subject
-    if(!empty($_POST["subject"]) && strlen(trim($_POST["subject"])) > 2){
-      $subject = htmlspecialchars(trim($_POST["subject"]));
-    }else{
-      $error = true;
-      $subject_error = true;
-    }
-    
-    // Validate message
-    if(!empty($_POST["message"]) && strlen(trim($_POST["message"])) > 10){
-      $message = htmlspecialchars(trim($_POST["message"]));
-    }else{
-      $error = true;
-      $message_error = true;
-    }
-    
-    if(!$error){
-      $success = true;
-      
-      $name = $email = $phonenumber = $booking_date = $subject = $message = "";
-      
-     
-    }
-  }
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -145,7 +63,6 @@
                     <div class="navbar-nav mx-0 mx-lg-auto">
                         <a href="index.html" class="nav-item nav-link">Home</a>
                         <a href="about.html" class="nav-item nav-link">About</a>
-                        <a href="service.html" class="nav-item nav-link">Services</a>
                         <a href="blog.html" class="nav-item nav-link">Blog</a>
                     </div>
                 </div>
@@ -173,12 +90,7 @@
         <div class="container py-5">
             <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
                 <h1 class="display-4 mb-4">Schedule an appointment</h1>
-                
-                <?php if($success): ?>
-                    <div class="alert alert-success" role="alert">
-                        <strong>Success!</strong> Your appointment request has been submitted successfully. We'll contact you soon!
-                    </div>
-                <?php endif; ?>
+
             </div>
             
             <div class="row g-5">
@@ -192,18 +104,14 @@
                 
                 <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.4s">
                     <div>
-                        <form method="POST" action="">
+                        <form >
                             <div class="row g-3">
                                 <div class="col-lg-12 col-xl-6">
                                     <div class="form-floating">
                                         <input type="text" class="form-control border-0 <?php echo $name_error ? 'is-invalid' : ''; ?>" 
-                                               id="name" placeholder="Your Name" name="name" value="<?php echo $name; ?>" required>
+                                               id="name" placeholder="Your Name" name="name" value="" required>
                                         <label for="name">
-                                            <?php if($name_error): ?>
-                                                <span style="color:red">Please enter your name (min 2 characters)</span>
-                                            <?php else: ?>
-                                                Your Name
-                                            <?php endif; ?>
+                                            Your Name
                                         </label>
                                     </div>
                                 </div>
@@ -211,13 +119,9 @@
                                 <div class="col-lg-12 col-xl-6">
                                     <div class="form-floating">
                                         <input type="email" class="form-control border-0 <?php echo $email_error ? 'is-invalid' : ''; ?>" 
-                                               id="email" placeholder="Your Email" name="email" value="<?php echo $email; ?>" required>
+                                               id="email" placeholder="Your Email" name="email" value="" required>
                                         <label for="email">
-                                            <?php if($email_error): ?>
-                                                <span style="color:red">Please enter a valid email address</span>
-                                            <?php else: ?>
                                                 Your Email
-                                            <?php endif; ?>
                                         </label>
                                     </div>
                                 </div>
@@ -225,13 +129,9 @@
                                 <div class="col-lg-12 col-xl-6">
                                     <div class="form-floating">
                                         <input type="tel" class="form-control border-0 <?php echo $phonenumber_error ? 'is-invalid' : ''; ?>" 
-                                               id="phone" placeholder="Phone" name="phonenumber" value="<?php echo $phonenumber; ?>" required>
+                                               id="phone" placeholder="Phone" name="phonenumber" value="" required>
                                         <label for="phone">
-                                            <?php if($phonenumber_error): ?>
-                                                <span style="color:red">Please enter a valid phone number (min 10 digits)</span>
-                                            <?php else: ?>
-                                                Your Phone
-                                            <?php endif; ?>
+                                            Your Phone
                                         </label>
                                     </div>
                                 </div>
@@ -239,14 +139,10 @@
                                 <div class="col-lg-12 col-xl-6">
                                     <div class="form-floating">
                                         <input type="date" class="form-control border-0 <?php echo $booking_date_error ? 'is-invalid' : ''; ?>" 
-                                               id="project" placeholder="Date" name="date" value="<?php echo $booking_date; ?>" 
+                                               id="project" placeholder="Date" name="date" value="" 
                                                min="<?php echo date('Y-m-d'); ?>" required>
                                         <label for="project">
-                                            <?php if($booking_date_error): ?>
-                                                <span style="color:red">Please choose a future date</span>
-                                            <?php else: ?>
-                                                Booking Date
-                                            <?php endif; ?>
+                                            Booking Date
                                         </label>
                                     </div>
                                 </div>
@@ -254,13 +150,9 @@
                                 <div class="col-12">
                                     <div class="form-floating">
                                         <input type="text" class="form-control border-0 <?php echo $subject_error ? 'is-invalid' : ''; ?>" 
-                                               id="subject" placeholder="Subject" name="subject" value="<?php echo $subject; ?>" required>
+                                               id="subject" placeholder="Subject" name="subject" value="" required>
                                         <label for="subject">
-                                            <?php if($subject_error): ?>
-                                                <span style="color:red">Please enter a subject (min 3 characters)</span>
-                                            <?php else: ?>
-                                                Subject
-                                            <?php endif; ?>
+                                            Subject
                                         </label>
                                     </div>
                                 </div>
@@ -269,13 +161,9 @@
                                     <div class="form-floating">
                                         <textarea class="form-control border-0 <?php echo $message_error ? 'is-invalid' : ''; ?>" 
                                                   placeholder="Leave a message here" id="message" name="message" 
-                                                  required style="height: 120px"><?php echo $message; ?></textarea>
+                                                  required style="height: 120px"></textarea>
                                         <label for="message">
-                                            <?php if($message_error): ?>
-                                                <span style="color:red">Please enter a message (min 10 characters)</span>
-                                            <?php else: ?>
-                                                Message
-                                            <?php endif; ?>
+                                            Message
                                         </label>
                                     </div>
                                 </div>
