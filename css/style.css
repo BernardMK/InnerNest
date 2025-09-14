@@ -876,8 +876,13 @@
 .footer .footer-item .footer-btn a:hover i {
     color: var(--bs-white);
 }
-#d_container{
-    margin-bottom: 20px;
+#d_container {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    padding: 7px;
+    background-color: blue;
+    border-radius: 7px;
 }
 /* Blog Comments Styles */
 .comment-link {
@@ -1082,4 +1087,9 @@
 }
 #otl{
     color: #ffffff;
+}
+.call{
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: none;
 }

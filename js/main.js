@@ -424,6 +424,36 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set maxlength attribute
     commentTextArea.setAttribute('maxlength', maxLength);
 });
+document.getElementById("searchForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    let query = document.getElementById("searchInput").value.toLowerCase();
+    let resultsContainer = document.getElementById("searchResults");
+    resultsContainer.innerHTML = "";
 
+    if (query.trim() === "") {
+        resultsContainer.innerHTML = "<li>No search term entered.</li>";
+        return;
+    }
+
+    // Grab all sections with IDs
+    let sections = document.querySelectorAll("[id]");
+    let found = false;
+
+    sections.forEach(section => {
+        let id = section.id;
+        let text = section.textContent.toLowerCase();
+
+        if (id.includes(query) || text.includes(query)) {
+            let li = document.createElement("li");
+            li.innerHTML = `<a href="#${id}">${id}</a>`;
+            resultsContainer.appendChild(li);
+            found = true;
+        }
+    });
+
+    if (!found) {
+        resultsContainer.innerHTML = "<li>No results found.</li>";
+    }
+});
 
 
