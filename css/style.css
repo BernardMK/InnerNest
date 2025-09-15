@@ -1093,3 +1093,12 @@
     text-decoration: none;
     text-transform: none;
 }
+#an_title{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    color: #ffffff;
+}
+#definition, #list{
+    color: #ffffff;
+}
