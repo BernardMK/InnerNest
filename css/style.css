@@ -881,14 +881,7 @@
     display: flex;
     justify-content: center;
     padding: 7px;
-    background-color: rgb(115, 115, 119);
-    border-radius: 7px;
-}
-#index_container {
-    margin-bottom: 40px;
-    display: flex;
-    justify-content: center;
-    padding: 7px;
+    background-color: blue;
     border-radius: 7px;
 }
 /* Blog Comments Styles */
@@ -1060,7 +1053,7 @@
 .middle_c{
     display: flex;
     padding: 7px;
-    background-color: #ffffff;
+    background-color: #bcc901;
     margin-bottom: 10px;
     border-radius: 7px;
 }
@@ -1082,60 +1075,28 @@
     border-radius: 7px;
     margin-left: 15px;
 }
-h5{
-    color: #ffffff;
-}
 .resources {
     
     display: flex;
     justify-content: center;
     align-items: center;
+    
     text-align: center;
     flex-direction: column; /* Ensures vertical stacking if there are multiple elements */
     width: 100%;
-   
-}
-#phone{
-    color: #ffffff;
-}
-.resources_title{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    flex-direction: column; /* Ensures vertical stacking if there are multiple elements */
-
 }
 #otl{
-    text-align: center;
     color: #ffffff;
 }
-.contact-info {
-    display: flex;
-    text-align: center;
-    margin-top: 10px;
-}
-
-.contact {
+.call{
     color: #ffffff;
     text-decoration: none;
-    margin: 5px 0;
+    text-transform: none;
 }
-
-.contact a {
-    color: #ffffff;
-    text-decoration: underline; /* or none, your choice */
-}
-
 #an_title{
     align-items: center;
     display: flex;
     justify-content: center;
-    color: #ffffff;
-}
-#sy_title, #cu_title{
-    align-items: center;
-    display: flex;
     color: #ffffff;
 }
 #definition, #list{
