@@ -881,7 +881,7 @@
     display: flex;
     justify-content: center;
     padding: 7px;
-    background-color: blue;
+    background-color: rgb(115, 115, 119);
     border-radius: 7px;
 }
 /* Blog Comments Styles */
@@ -1097,6 +1097,11 @@
     align-items: center;
     display: flex;
     justify-content: center;
+    color: #ffffff;
+}
+#sy_title, #cu_title{
+    align-items: center;
+    display: flex;
     color: #ffffff;
 }
 #definition, #list{
