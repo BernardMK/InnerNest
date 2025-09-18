@@ -28,7 +28,7 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(135deg, var(--background) 0%, #1a1f3a 100%);
+  background: white;
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
@@ -78,7 +78,7 @@ body {
 .header {
   background: var(--surface);
   padding: 20px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid white;
   backdrop-filter: blur(10px);
 }
 
@@ -105,7 +105,7 @@ body {
 .logo h1 {
   font-size: 24px;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  background: #015fc9;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: white;
@@ -343,7 +343,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--surface-light);
+  background: #015fc9;
 }
 
 .assistant-info {
@@ -355,7 +355,7 @@ body {
 .assistant-avatar {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, var(--secondary-color), #34d399);
+  background: linear-gradient(135deg, #06573c, #34d399);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -392,8 +392,8 @@ body {
 
 .clear-chat-btn {
   background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
+  border: 1px solid white;
+  color: white;
   padding: 8px 16px;
   border-radius: 8px;
   cursor: pointer;
@@ -421,6 +421,7 @@ body {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  background-color: white;
   gap: 16px;
 }
 
@@ -524,12 +525,12 @@ body {
 }
 
 .message.user .message-avatar {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  background: linear-gradient(135deg, #015fc9, #1e354e);
   color: white;
 }
 
 .message.assistant .message-avatar {
-  background: linear-gradient(135deg, var(--secondary-color), #34d399);
+  background: linear-gradient(135deg, #06573c, #34d399);
   color: white;
 }
 
@@ -547,13 +548,13 @@ body {
 }
 
 .message.user .message-content {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(135deg, #246cbe, #73b3f7);
   color: white;
   border-bottom-right-radius: 4px;
 }
 
 .message.assistant .message-content {
-  background: var(--surface-light);
+  background: #32df32;
   color: var(--text-primary);
   border-bottom-left-radius: 4px;
 }
