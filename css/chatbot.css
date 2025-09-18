@@ -158,7 +158,7 @@ body {
 /* ========== Sidebar ========== */
 .sidebar {
   width: 320px;
-  background: var(--surface);
+  background: black;
   border-radius: 16px;
   padding: 20px;
   display: flex;
@@ -173,7 +173,7 @@ body {
   align-items: center;
   gap: 15px;
   padding: 15px;
-  background: var(--surface-light);
+  background: black;
   border-radius: 12px;
 }
 
@@ -343,7 +343,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #015fc9;
+  background: #000000;
 }
 
 .assistant-info {
@@ -581,7 +581,7 @@ body {
 .suggested-prompts {
   padding: 15px 20px;
   border-top: 1px solid var(--border);
-  background: rgba(51, 65, 85, 0.3);
+  background: black;
 }
 
 .prompts-label {
@@ -619,7 +619,7 @@ body {
 .input-area {
   padding: 20px;
   border-top: 1px solid var(--border);
-  background: var(--surface-light);
+  background: black;
 }
 
 .input-container {
