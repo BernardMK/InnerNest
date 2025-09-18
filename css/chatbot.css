@@ -76,7 +76,7 @@ body {
 
 /* ========== Header ========== */
 .header {
-  background: var(--surface);
+  background: white;
   padding: 20px;
   border-bottom: 1px solid white;
   backdrop-filter: blur(10px);
