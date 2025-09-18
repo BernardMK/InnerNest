@@ -1102,3 +1102,11 @@
 #definition, #list{
     color: #ffffff;
 }
+#success {
+    display: none; /* hidden initially */
+    justify-content: center;
+    padding: 7px;
+    background-color: #66b842;
+    width: 100%;
+    border-radius: 7px;
+}

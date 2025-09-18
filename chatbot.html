@@ -1,409 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>InnerNest</title>
-<style>
-  #back_button{
-    background-color: #1e40af;
-    height: 50px;
-    width: 50px;
-    border-radius: 3px;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  #back_button:hover{
-    background-color: #1d4ed8;
-  }
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;background:linear-gradient(135deg,#f0f8ff 0%,#ffffff 50%,#f0fff0 100%);min-height:100vh}
-.header{background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.1);border-bottom:1px solid #e5e5e5}
-.header-content{max-width:1024px;margin:auto;padding:16px;display:flex;align-items:center;gap:12px}
-.header-icon{background:#dbeafe;padding:8px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.header-icon svg{width:24px;height:24px;color:#2563eb}
-.header-text h1{font-size:1.25rem;font-weight:600;color:#1f2937;margin-bottom:2px}
-.header-text p{font-size:.875rem;color:#6b7280}
-.chat-room-selector{max-width:1024px;margin:20px auto;padding:16px;background:#fff;border:1px solid #e5e5e5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
-.chat-room-selector h2{font-size:1rem;margin-bottom:8px;color:#1f2937}
-.chat-room-selector input{padding:8px;border:1px solid #d1d5db;border-radius:8px;font-size:1rem;width:250px}
-.chat-room-selector button{margin-left:8px;padding:8px 12px;background:#2563eb;color:#fff;border:none;border-radius:8px;cursor:pointer}
-.chat-room-selector button:hover{background:#1d4ed8}
-.main-container{max-width:1024px;margin:auto;padding:16px;height:calc(100vh - 120px);display:none;flex-direction:column}
-.disclaimer{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px;margin-bottom:16px;display:flex;align-items:flex-start;gap:8px}
-.disclaimer svg{width:20px;height:20px;color:#2563eb;margin-top:2px;flex-shrink:0}
-.disclaimer-text{font-size:.875rem;color:#1e40af}
-.chat-container{flex:1;background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.1);border:1px solid #e5e5e5;display:flex;flex-direction:column;overflow:hidden}
-.messages-area{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px}
-.message{display:flex;gap:12px;align-items:flex-end}
-.message.user{flex-direction:row-reverse}
-.message-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.message.user .message-avatar{background:#2563eb;color:#fff}
-.message.assistant .message-avatar{background:#dcfce7;color:#16a34a}
-.message-avatar svg{width:16px;height:16px}
-.message-content{max-width:70%}
-.message.user .message-content{text-align:right}
-.message-bubble{padding:12px;border-radius:8px;margin-bottom:4px;word-wrap:break-word}
-.message.user .message-bubble{background:#2563eb;color:#fff}
-.message.assistant .message-bubble{background:#f3f4f6;color:#1f2937}
-.message-time{font-size:.75rem;color:#6b7280}
-.input-area{border-top:1px solid #e5e5e5;padding:16px;background:#f9fafb}
-.input-row{display:flex;gap:8px}
-.message-input{flex:1;border:1px solid #d1d5db;border-radius:8px;padding:8px 12px;font-size:1rem;font-family:inherit;resize:vertical;min-height:40px;max-height:120px;outline:none;transition:border-color .2s}
-.message-input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.send-button{background:#2563eb;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;min-width:60px}
-.send-button:hover:not(:disabled){background:#1d4ed8}
-.send-button:disabled{opacity:.5;cursor:not-allowed}
-.typing-indicator{display:none;align-items:center;gap:8px;padding:16px;color:#6b7280;font-style:italic}
-.typing-dots{display:flex;gap:3px}
-.typing-dot{width:6px;height:6px;background:#6b7280;border-radius:50%;animation:typing 1.4s infinite ease-in-out}
-.typing-dot:nth-child(1){animation-delay:-0.32s}
-.typing-dot:nth-child(2){animation-delay:-0.16s}
-@keyframes typing{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
-.quick-responses{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.quick-response{background:#e5e7eb;color:#374151;border:none;padding:6px 12px;border-radius:20px;font-size:0.875rem;cursor:pointer;transition:all 0.2s}
-.quick-response:hover{background:#d1d5db}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnerNest - Mental Health Support</title>
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<!-- Header -->
-<div class="header">
-  <div class="header-content">
-    <a href="index.html"><button id="back_button">Back</button></a>
-    <div class="header-icon">
-      <svg fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
-      </svg>
+    <!-- Crisis Banner -->
+    <div class="crisis-banner" id="crisisBanner">
+        <div class="crisis-content">
+            <span class="crisis-icon">⚠️</span>
+            <span>If you're in crisis, please call <strong>988</strong> (Suicide & Crisis Lifeline) or <strong>911</strong> for immediate help</span>
+            <button class="crisis-close" onclick="closeCrisisBanner()">×</button>
+        </div>
     </div>
-    <div class="header-text">
-      <h1>Mental Health Support</h1>
-      <p>Confidential AI support • Available 24/7</p>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>InnerNest</h1>
+            </div>
+            
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <div class="avatar">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+                <div class="user-info">
+                    <h3>Anonymous User</h3>
+                    <p class="user-status">Safe & Confidential</p>
+                </div>
+            </div>
+
+            <div class="mood-tracker">
+                <h4>How are you feeling?</h4>
+                <div class="mood-options">
+                    <button class="mood-btn" data-mood="happy" onclick="setMood('happy')">😊</button>
+                    <button class="mood-btn" data-mood="calm" onclick="setMood('calm')">😌</button>
+                    <button class="mood-btn" data-mood="anxious" onclick="setMood('anxious')">😰</button>
+                    <button class="mood-btn" data-mood="sad" onclick="setMood('sad')">😢</button>
+                    <button class="mood-btn" data-mood="angry" onclick="setMood('angry')">😠</button>
+                </div>
+            </div>
+
+            <div class="quick-tools">
+                <h4>Quick Tools</h4>
+                <button class="tool-btn" onclick="startBreathingExercise()">
+                    <span class="tool-icon">🫁</span>
+                    <span>Breathing Exercise</span>
+                </button>
+                <button class="tool-btn" onclick="startMeditation()">
+                    <span class="tool-icon">🧘</span>
+                    <span>Guided Meditation</span>
+                </button>
+                <button class="tool-btn" onclick="showJournal()">
+                    <span class="tool-icon">📝</span>
+                    <span>Journal Entry</span>
+                </button>
+                <button class="tool-btn" onclick="showCopingStrategies()">
+                    <span class="tool-icon">💪</span>
+                    <span>Coping Strategies</span>
+                </button>
+            </div>
+
+            <div class="session-info">
+                <h4>Session Info</h4>
+                <p class="session-time">Duration: <span id="sessionTimer">00:00</span></p>
+                <p class="session-privacy">🔒 End-to-end encrypted</p>
+                <a href="index.html"><button class="end-session-btn" >End Session</button></a>
+                
+            </div>
+        </aside>
+
+        <!-- Chat Area -->
+        <main class="chat-area">
+            <div class="chat-header">
+                <div class="assistant-info">
+                    <div class="assistant-avatar">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Support Assistant</h3>
+                        <p class="assistant-status">
+                            <span class="status-dot"></span>
+                            Available 24/7 • Confidential Support
+                        </p>
+                    </div>
+                </div>
+                <button class="clear-chat-btn" onclick="clearChat()">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                    Clear Chat
+                </button>
+            </div>
+
+            <div class="messages-container" id="messagesContainer">
+                <div class="welcome-message">
+                    <div class="welcome-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h2>Welcome to InnerNest</h2>
+                    <p>This is a safe, confidential space where you can express yourself freely.</p>
+                    <div class="welcome-features">
+                        <div class="feature">
+                            <span class="feature-icon">🔐</span>
+                            <span>100% Confidential</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🤝</span>
+                            <span>Non-judgmental Support</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">⏰</span>
+                            <span>Available 24/7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-bubble">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+
+            <div class="suggested-prompts" id="suggestedPrompts">
+                <p class="prompts-label">Quick conversation starters:</p>
+                <div class="prompts-container">
+                    <button class="prompt-chip" onclick="sendPrompt('I\'m feeling anxious today')">I'm feeling anxious</button>
+                    <button class="prompt-chip" onclick="sendPrompt('I need someone to talk to')">Need someone to talk to</button>
+                    <button class="prompt-chip" onclick="sendPrompt('I\'m having trouble sleeping')">Trouble sleeping</button>
+                    <button class="prompt-chip" onclick="sendPrompt('I feel overwhelmed with work')">Feeling overwhelmed</button>
+                    <button class="prompt-chip" onclick="sendPrompt('I want to learn coping strategies')">Coping strategies</button>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-container">
+                    <button class="attachment-btn" onclick="attachFile()">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/>
+                        </svg>
+                    </button>
+                    <textarea 
+                        id="messageInput" 
+                        class="message-input" 
+                        placeholder="Type your message here... Remember, this is a safe space."
+                        rows="1"
+                    ></textarea>
+                    <button class="voice-btn" onclick="toggleVoiceInput()">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                        </svg>
+                    </button>
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="input-hint">
+                    <span>Press Enter to send, Shift+Enter for new line</span>
+                </div>
+            </div>
+        </main>
     </div>
-  </div>
-</div>
 
-<!-- Room Selector -->
-<div class="chat-room-selector">
-  <h2>Join a Chat Room</h2>
-  <input type="text" id="roomNameInput" placeholder="Enter room name..." />
-  <button onclick="joinRoom()">Join</button>
-  <div id="currentRoom" style="margin-top:10px;font-weight:bold;"></div>
-</div>
-
-<!-- Main Container -->
-<div class="main-container" id="mainContainer">
-  <div class="disclaimer">
-    <svg fill="currentColor" viewBox="0 0 20 20">
-      <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-    </svg>
-    <div class="disclaimer-text"><strong>Important:</strong> This chatbot provides peer support and resources, not professional therapy. For emergencies, call 988 or 911.</div>
-  </div>
-
-  <!-- Chat Container -->
-  <div class="chat-container">
-    <div class="messages-area" id="messagesArea"></div>
-    <div class="typing-indicator" id="typingIndicator">
-      <span>Support Assistant is typing</span>
-      <div class="typing-dots">
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-      </div>
+    <!-- Breathing Exercise Modal -->
+    <div class="modal" id="breathingModal">
+        <div class="modal-content breathing-modal">
+            <button class="modal-close" onclick="closeBreathingExercise()">×</button>
+            <h2>Breathing Exercise</h2>
+            <div class="breathing-circle" id="breathingCircle">
+                <span class="breathing-text" id="breathingText">Ready</span>
+            </div>
+            <div class="breathing-instructions">
+                <p id="breathingInstructions">Click start to begin the 4-7-8 breathing technique</p>
+            </div>
+            <button class="breathing-start-btn" onclick="startBreathingAnimation()">Start Exercise</button>
+        </div>
     </div>
-    <div class="input-area">
-      <div class="quick-responses" id="quickResponses" style="display:none;">
-        <button class="quick-response" onclick="sendQuickResponse('I\'m feeling anxious')">I'm feeling anxious</button>
-        <button class="quick-response" onclick="sendQuickResponse('I need someone to talk to')">I need someone to talk to</button>
-        <button class="quick-response" onclick="sendQuickResponse('I\'m having trouble sleeping')">I'm having trouble sleeping</button>
-        <button class="quick-response" onclick="sendQuickResponse('I feel overwhelmed')">I feel overwhelmed</button>
-      </div>
-      <div class="input-row">
-        <textarea class="message-input" id="messageInput" placeholder="Share what's on your mind..." rows="1"></textarea>
-        <button class="send-button" id="sendButton" onclick="sendMessage()">Send</button>
-      </div>
+
+    <!-- Journal Modal -->
+    <div class="modal" id="journalModal">
+        <div class="modal-content journal-modal">
+            <button class="modal-close" onclick="closeJournal()">×</button>
+            <h2>Journal Entry</h2>
+            <div class="journal-date" id="journalDate"></div>
+            <textarea class="journal-textarea" id="journalText" placeholder="Write your thoughts here..."></textarea>
+            <div class="journal-prompts">
+                <p>Need inspiration? Try these prompts:</p>
+                <ul>
+                    <li>What are three things I'm grateful for today?</li>
+                    <li>What emotions am I experiencing right now?</li>
+                    <li>What would make today better?</li>
+                </ul>
+            </div>
+            <button class="journal-save-btn" onclick="saveJournalEntry()">Save Entry</button>
+        </div>
     </div>
-  </div>
-</div>
 
-<script>
-let rooms = {};
-let currentRoom = null;
-
-// Mental health support responses database
-const responses = {
-  greetings: [
-    "Hello! I'm here to provide a safe space for you to share your thoughts and feelings. How are you doing today?",
-    "Hi there! Thank you for reaching out. I'm here to listen and support you. What's on your mind?",
-    "Welcome! I'm glad you're here. This is a judgment-free space where you can express yourself freely. How can I help you today?"
-  ],
-  
-  anxiety: [
-    "I understand you're feeling anxious. Anxiety can be overwhelming, but you're not alone. Try taking slow, deep breaths - in for 4 counts, hold for 4, out for 4. Can you tell me more about what's making you feel this way?",
-    "Anxiety is really challenging to deal with. One technique that often helps is grounding - try naming 5 things you can see, 4 things you can touch, 3 things you can hear, 2 things you can smell, and 1 thing you can taste. What triggered these feelings?",
-    "Thank you for sharing that you're feeling anxious. Your feelings are completely valid. Sometimes it helps to remind ourselves that feelings are temporary - they come and go like waves. Would you like to talk about what's contributing to your anxiety?"
-  ],
-  
-  sadness: [
-    "I hear that you're going through a difficult time. Sadness is a natural human emotion, and it's okay to feel this way. You don't have to face this alone. What's been weighing on your heart?",
-    "It takes courage to acknowledge when we're struggling with sadness. Your feelings matter, and so do you. Sometimes talking about what's bothering us can help lighten the emotional load. What's been on your mind?",
-    "Sadness can feel heavy and all-consuming. Please know that it's okay to not be okay sometimes. You're taking a positive step by reaching out. Would you like to share what's been making you feel sad?"
-  ],
-  
-  stress: [
-    "Stress can really take a toll on both our mental and physical well-being. You're doing the right thing by recognizing it and seeking support. What are the main sources of stress in your life right now?",
-    "I understand you're feeling stressed. When we're overwhelmed, it can help to break things down into smaller, manageable pieces. What's the biggest stressor you're facing right now?",
-    "Stress is your body's way of responding to demands, and it sounds like you're dealing with quite a bit. Remember, you don't have to handle everything at once. What's been causing you the most stress lately?"
-  ],
-  
-  loneliness: [
-    "Feeling lonely can be really painful, but please remember that reaching out here shows incredible strength. You're not as alone as you might feel. What's been making you feel isolated?",
-    "Loneliness is one of the most difficult emotions to experience. Thank you for trusting me with these feelings. Even though I'm not physically present, I want you to know that you're heard and valued. What's contributing to these feelings of loneliness?",
-    "I'm sorry you're feeling lonely. It's important to remember that loneliness is about the quality of connections, not just the quantity. You matter, and your feelings are valid. What would help you feel more connected right now?"
-  ],
-  
-  overwhelmed: [
-    "Feeling overwhelmed is exhausting, and I can understand how that might feel paralyzing. You're not alone in this. Sometimes it helps to focus on just the next small step rather than the whole mountain. What's making you feel most overwhelmed right now?",
-    "When everything feels like too much, it's completely normal to feel overwhelmed. You're showing strength by reaching out for support. Let's try to break down what you're dealing with - what feels like the most pressing concern?",
-    "Being overwhelmed can make everything seem impossible to manage. Take a deep breath with me. You don't have to solve everything today. What's one thing that's been weighing heavily on you?"
-  ],
-  
-  sleep: [
-    "Sleep troubles can really impact our mental health and daily functioning. You're not alone in struggling with this. What's been keeping you awake - racing thoughts, physical discomfort, or something else?",
-    "Difficulty sleeping can be both a symptom and a cause of stress and anxiety. It's a common struggle. Have you tried any relaxation techniques before bed, or is something specific keeping your mind active at night?",
-    "Sleep issues can make everything else feel harder to handle. Your concern about this is completely valid. What does your bedtime routine look like, and what thoughts typically go through your mind when you're trying to fall asleep?"
-  ],
-  
-  crisis: [
-    "I'm really concerned about what you're sharing. If you're having thoughts of hurting yourself or others, please reach out to professionals immediately: Call 988 for the Suicide & Crisis Lifeline, or 911 for immediate emergency help. You don't have to go through this alone, and there are people who want to help you.",
-    "What you're describing sounds very serious, and I want to make sure you get proper support. Please contact emergency services (911) or the crisis lifeline (988) right away. Your life has value, and there are trained professionals who can help you through this difficult time.",
-    "I'm worried about your safety based on what you've shared. This is more than I can help with, but trained crisis counselors can. Please call 988 (Suicide & Crisis Lifeline) or 911 immediately. You deserve support and care."
-  ],
-  
-  general_support: [
-    "Thank you for sharing that with me. Your feelings are completely valid, and it takes courage to open up. What feels most important for you to talk about right now?",
-    "I hear you, and I want you to know that your experiences matter. You're not alone in whatever you're going through. How has this been affecting your daily life?",
-    "It sounds like you're dealing with something challenging. I'm here to listen without judgment. What would be most helpful for you in this conversation?",
-    "I appreciate you trusting me with your thoughts and feelings. You've taken a brave step by reaching out. What kind of support would feel most helpful to you right now?"
-  ],
-  
-  resources: [
-    "Here are some resources that might help: 988 Suicide & Crisis Lifeline (call or text 988), Crisis Text Line (text HOME to 741741), NAMI Helpline (1-800-950-6264). Would you like me to help you think through next steps?",
-    "Remember, professional help is available when you need it. Some options include: your doctor, a licensed therapist, employee assistance programs through work, or community mental health centers. What feels like the most comfortable first step for you?",
-    "If you'd like to explore professional support, consider: Psychology Today's therapist directory, your insurance provider's mental health network, university counseling centers if you're a student, or telehealth platforms. What barriers, if any, do you face in seeking professional help?"
-  ]
-};
-
-// Keywords to response mapping
-const keywordMap = {
-  'anxiety': 'anxiety',
-  'anxious': 'anxiety',
-  'worried': 'anxiety', 
-  'panic': 'anxiety',
-  'nervous': 'anxiety',
-  
-  'sad': 'sadness',
-  'depressed': 'sadness',
-  'down': 'sadness',
-  'upset': 'sadness',
-  'crying': 'sadness',
-  
-  'stress': 'stress',
-  'stressed': 'stress',
-  'pressure': 'stress',
-  'overwhelm': 'overwhelmed',
-  'overwhelmed': 'overwhelmed',
-  'too much': 'overwhelmed',
-  
-  'lonely': 'loneliness',
-  'alone': 'loneliness',
-  'isolated': 'loneliness',
-  'disconnected': 'loneliness',
-  
-  'sleep': 'sleep',
-  'insomnia': 'sleep',
-  'tired': 'sleep',
-  'exhausted': 'sleep',
-  'can\'t sleep': 'sleep',
-  
-  'kill': 'crisis',
-  'suicide': 'crisis',
-  'hurt myself': 'crisis',
-  'end it': 'crisis',
-  'die': 'crisis',
-  'harm': 'crisis',
-  
-  'hello': 'greetings',
-  'hi': 'greetings',
-  'hey': 'greetings',
-  'help': 'general_support'
-};
-
-function analyzeMessage(message) {
-  const lowerMessage = message.toLowerCase();
-  
-  // Check for crisis keywords first
-  for (let keyword of ['kill', 'suicide', 'hurt myself', 'end it', 'die', 'harm']) {
-    if (lowerMessage.includes(keyword)) {
-      return 'crisis';
-    }
-  }
-  
-  // Check other keywords
-  for (let [keyword, category] of Object.entries(keywordMap)) {
-    if (lowerMessage.includes(keyword)) {
-      return category;
-    }
-  }
-  
-  return 'general_support';
-}
-
-function getResponse(category) {
-  const categoryResponses = responses[category] || responses['general_support'];
-  const randomIndex = Math.floor(Math.random() * categoryResponses.length);
-  return categoryResponses[randomIndex];
-}
-
-function joinRoom() {
-  const roomInput = document.getElementById("roomNameInput");
-  const roomName = roomInput.value.trim();
-  if (!roomName) return;
-
-  currentRoom = roomName;
-  if (!rooms[currentRoom]) {
-    rooms[currentRoom] = [];
-    // Add welcome message for new rooms
-    const welcomeMessage = {
-      sender: "assistant",
-      text: "Welcome to your private support space. I'm here to listen and provide a safe environment for you to share your thoughts and feelings. Everything we discuss is confidential. How are you feeling today?",
-      time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
-    };
-    rooms[currentRoom].push(welcomeMessage);
-  }
-
-  document.getElementById("currentRoom").innerText = "Room: " + currentRoom;
-  document.getElementById("mainContainer").style.display = "flex";
-  document.getElementById("quickResponses").style.display = "flex";
-
-  renderMessages();
-}
-
-function renderMessages() {
-  const messagesArea = document.getElementById("messagesArea");
-  messagesArea.innerHTML = "";
-
-  if (!currentRoom) return;
-  const messages = rooms[currentRoom];
-
-  messages.forEach(msg => {
-    const messageDiv = document.createElement("div");
-    messageDiv.className = `message ${msg.sender}`;
-    
-    const avatarSvg = msg.sender === 'user' ? 
-      '<svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>' :
-      '<svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg>';
-    
-    messageDiv.innerHTML = `
-      <div class="message-avatar">${avatarSvg}</div>
-      <div class="message-content">
-        <div class="message-bubble">${msg.text}</div>
-        <div class="message-time">${msg.time}</div>
-      </div>
-    `;
-    messagesArea.appendChild(messageDiv);
-  });
-
-  messagesArea.scrollTop = messagesArea.scrollHeight;
-}
-
-function showTyping() {
-  document.getElementById("typingIndicator").style.display = "flex";
-}
-
-function hideTyping() {
-  document.getElementById("typingIndicator").style.display = "none";
-}
-
-function sendMessage() {
-  const input = document.getElementById("messageInput");
-  const text = input.value.trim();
-  if (!text || !currentRoom) return;
-
-  const message = {
-    sender: "user",
-    text,
-    time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
-  };
-
-  rooms[currentRoom].push(message);
-  input.value = "";
-  document.getElementById("sendButton").disabled = true;
-  renderMessages();
-
-  // Show typing indicator
-  showTyping();
-
-  // Generate contextual response
-  setTimeout(() => {
-    const category = analyzeMessage(text);
-    const responseText = getResponse(category);
-    
-    const reply = {
-      sender: "assistant",
-      text: responseText,
-      time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
-    };
-    
-    rooms[currentRoom].push(reply);
-    hideTyping();
-    renderMessages();
-    
-    // Add follow-up resources if crisis detected
-    if (category === 'crisis') {
-      setTimeout(() => {
-        const resourceReply = {
-          sender: "assistant",
-          text: getResponse('resources'),
-          time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
-        };
-        rooms[currentRoom].push(resourceReply);
-        renderMessages();
-      }, 2000);
-    }
-  }, 1500 + Math.random() * 1000); // Variable delay for more natural feel
-}
-
-function sendQuickResponse(text) {
-  document.getElementById("messageInput").value = text;
-  sendMessage();
-}
-
-// Handle Enter key in textarea
-document.addEventListener('DOMContentLoaded', function() {
-  const messageInput = document.getElementById('messageInput');
-  
-  messageInput.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  });
-  
-  // Auto-resize textarea
-  messageInput.addEventListener('input', function() {
-    this.style.height = 'auto';
-    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-  });
-  
-  // Room name input Enter key
-  document.getElementById('roomNameInput').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-      joinRoom();
-    }
-  });
-});
-</script>
+    <script src="js/chatbot.js"></script>
 </body>
 </html>
