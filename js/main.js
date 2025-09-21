@@ -1,16 +1,30 @@
+
+document.addEventListener("DOMContentLoaded", function() {
+    ['ed','dd','pa','pd'].forEach(function(id){
+        var el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+    });
+});
+function showMoreDisorders(btn) {
+    ['ed','dd','pa','pd'].forEach(function(id){
+        var el = document.getElementById(id);
+        if (el) el.style.display = 'flex';
+    });
+    btn.style.display = 'none';
+}
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("form");
     const successDiv = document.getElementById("success");
 
     form.addEventListener("submit", function (event) {
-        event.preventDefault(); // prevents actual form submission for demo
-        successDiv.style.display = "flex"; // show success message
+        event.preventDefault(); 
+        successDiv.style.display = "flex";
     });
 });
 (function ($) {
     "use strict";
 
-    // Spinner
+
     var spinner = function () {
         setTimeout(function () {
             if ($('#spinner').length > 0) {
@@ -21,11 +35,10 @@ document.addEventListener("DOMContentLoaded", function () {
     spinner(0);
     
     
-    // Initiate the wowjs
     new WOW().init();
     
 
-    // Sticky Navbar
+
     $(window).scroll(function () {
         if ($(this).scrollTop() > 45) {
             $('.nav-bar').addClass('sticky-top shadow-sm').css('top', '0px');
@@ -34,8 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-
-    // Header carousel
     $(".header-carousel").owlCarousel({
         animateOut: 'fadeOut',
         items: 1,
@@ -54,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    // testimonial carousel
+
     $(".testimonial-carousel").owlCarousel({
         autoplay: true,
         smartSpeed: 1500,
@@ -88,14 +99,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    // Facts counter
+
     $('[data-toggle="counter-up"]').counterUp({
         delay: 5,
         time: 2000
     });
 
 
-   // Back to top button
+
    $(window).scroll(function () {
     if ($(this).scrollTop() > 300) {
         $('.back-to-top').fadeIn('slow');

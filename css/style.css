@@ -1110,3 +1110,24 @@
     width: 100%;
     border-radius: 7px;
 }
+#v_more{
+    display: flex;
+    justify-content: center;
+    width: 20%;
+}
+.vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-weight: bold;
+    color: #ffffff;
+    line-height:1.5;
+    letter-spacing: 5px;
+    border-radius: 7px;
+    background-color: #636370;
+}
+
+#left_side_text {
+    position: absolute;
+    left: 40px;
+    top: 300px;
+}

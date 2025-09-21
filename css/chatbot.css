@@ -28,7 +28,7 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: white;
+  background: #989898;
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
@@ -76,9 +76,9 @@ body {
 
 /* ========== Header ========== */
 .header {
-  background: white;
+  background: #989898;
   padding: 20px;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid #989898;
   backdrop-filter: blur(10px);
 }
 
@@ -105,7 +105,7 @@ body {
 .logo h1 {
   font-size: 24px;
   font-weight: 700;
-  background: #015fc9;
+  background: #f5f5f5;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: white;
@@ -158,14 +158,14 @@ body {
 /* ========== Sidebar ========== */
 .sidebar {
   width: 320px;
-  background: black;
+  background: #b2b2b2;
   border-radius: 16px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   overflow-y: auto;
-  border: 1px solid var(--border);
+  border: 1px solid #b2b2b2;
 }
 
 .user-profile {
@@ -173,7 +173,7 @@ body {
   align-items: center;
   gap: 15px;
   padding: 15px;
-  background: black;
+  background: #989898;
   border-radius: 12px;
 }
 
@@ -209,7 +209,7 @@ body {
 
 /* ========== Mood Tracker ========== */
 .mood-tracker {
-  background: var(--surface-light);
+  background: #989898;
   padding: 15px;
   border-radius: 12px;
 }
@@ -217,7 +217,7 @@ body {
 .mood-tracker h4 {
   font-size: 14px;
   margin-bottom: 12px;
-  color: var(--text-secondary);
+  color: #ffffff;
 }
 
 .mood-options {
@@ -226,11 +226,11 @@ body {
 }
 
 .mood-btn {
-  background: var(--surface);
+  background: #656565;
   border: 2px solid transparent;
-  font-size: 24px;
+  font-size: 18px;
   padding: 8px;
-  border-radius: 8px;
+  border-radius: 7px;
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -247,7 +247,7 @@ body {
 
 /* ========== Quick Tools ========== */
 .quick-tools {
-  background: var(--surface-light);
+  background: #989898;
   padding: 15px;
   border-radius: 12px;
 }
@@ -255,13 +255,13 @@ body {
 .quick-tools h4 {
   font-size: 14px;
   margin-bottom: 12px;
-  color: var(--text-secondary);
+  color: #ffffff;
 }
 
 .tool-btn {
   width: 100%;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: #b2b2b2;
+  border: 1px solid #b2b2b2;
   color: var(--text-primary);
   padding: 12px;
   border-radius: 8px;
@@ -286,7 +286,7 @@ body {
 
 /* ========== Session Info ========== */
 .session-info {
-  background: var(--surface-light);
+  background: #989898;
   padding: 15px;
   border-radius: 12px;
   margin-top: auto;
@@ -295,12 +295,12 @@ body {
 .session-info h4 {
   font-size: 14px;
   margin-bottom: 12px;
-  color: var(--text-secondary);
+  color: #f7f7f7;
 }
 
 .session-info p {
   font-size: 13px;
-  color: var(--text-muted);
+  color: #ffffff;
   margin-bottom: 8px;
 }
 
@@ -329,21 +329,21 @@ body {
 /* ========== Chat Area ========== */
 .chat-area {
   flex: 1;
-  background: var(--surface);
+  background: #989898;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid #989898;
 }
 
 .chat-header {
   padding: 20px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #9d9a9a;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #000000;
+  background: #b2b2b2;
 }
 
 .assistant-info {
@@ -421,7 +421,7 @@ body {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: #b2b2b2;
   gap: 16px;
 }
 
@@ -580,8 +580,8 @@ body {
 /* ========== Suggested Prompts ========== */
 .suggested-prompts {
   padding: 15px 20px;
-  border-top: 1px solid var(--border);
-  background: black;
+  border-top: 1px solid #9d9c9c;
+  background: #b2b2b2;
 }
 
 .prompts-label {
@@ -618,8 +618,8 @@ body {
 /* ========== Input Area ========== */
 .input-area {
   padding: 20px;
-  border-top: 1px solid var(--border);
-  background: black;
+  border-top: 1px solid #b2b2b2;
+  background: #b2b2b2;
 }
 
 .input-container {
@@ -632,8 +632,8 @@ body {
 .voice-btn {
   width: 40px;
   height: 40px;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: #989898;
+  border: 1px solid #989898;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -659,11 +659,11 @@ body {
 
 .message-input {
   flex: 1;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: #989898;
+  border: 1px solid #989898;
   border-radius: 12px;
   padding: 12px 16px;
-  color: var(--text-primary);
+  color: #ffffff;
   font-size: 15px;
   resize: none;
   max-height: 120px;
@@ -1044,4 +1044,7 @@ body {
     width: 36px;
     height: 36px;
   }
+}
+#logo{
+  margin-right: 7px;
 }
