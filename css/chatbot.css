@@ -28,15 +28,16 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: #989898;
-  color: var(--text-primary);
+  background: whitesmoke;
+  color: black;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
 /* ========== Crisis Banner ========== */
 .crisis-banner {
-  background: linear-gradient(90deg, var(--error), #dc2626);
+  background: linear-gradient(
+90deg, #1532ff, #1e349f);
   padding: 12px 20px;
   text-align: center;
   position: sticky;
@@ -76,9 +77,9 @@ body {
 
 /* ========== Header ========== */
 .header {
-  background: #989898;
+  background: whitesmoke;
   padding: 20px;
-  border-bottom: 1px solid #989898;
+  border-bottom: 1px solid transparent;
   backdrop-filter: blur(10px);
 }
 
@@ -105,7 +106,7 @@ body {
 .logo h1 {
   font-size: 24px;
   font-weight: 700;
-  background: #f5f5f5;
+  background: blue;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: white;
@@ -158,7 +159,7 @@ body {
 /* ========== Sidebar ========== */
 .sidebar {
   width: 320px;
-  background: #b2b2b2;
+  background: white;
   border-radius: 16px;
   padding: 20px;
   display: flex;
@@ -173,14 +174,14 @@ body {
   align-items: center;
   gap: 15px;
   padding: 15px;
-  background: #989898;
+  background: white;
   border-radius: 12px;
 }
 
 .avatar {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  background: linear-gradient(135deg, #1843fd, var(--primary-light));
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -201,7 +202,7 @@ body {
 
 .user-status {
   font-size: 12px;
-  color: var(--success);
+  color: #0819ff;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -209,7 +210,7 @@ body {
 
 /* ========== Mood Tracker ========== */
 .mood-tracker {
-  background: #989898;
+  background: white;
   padding: 15px;
   border-radius: 12px;
 }
@@ -217,7 +218,7 @@ body {
 .mood-tracker h4 {
   font-size: 14px;
   margin-bottom: 12px;
-  color: #ffffff;
+  color: black;
 }
 
 .mood-options {
@@ -226,8 +227,8 @@ body {
 }
 
 .mood-btn {
-  background: #656565;
-  border: 2px solid transparent;
+  background: white;
+  border: 2px solid black;
   font-size: 18px;
   padding: 8px;
   border-radius: 7px;
@@ -247,7 +248,7 @@ body {
 
 /* ========== Quick Tools ========== */
 .quick-tools {
-  background: #989898;
+  background: #ffffff;
   padding: 15px;
   border-radius: 12px;
 }
@@ -255,14 +256,14 @@ body {
 .quick-tools h4 {
   font-size: 14px;
   margin-bottom: 12px;
-  color: #ffffff;
+  color: #000000;
 }
 
 .tool-btn {
   width: 100%;
-  background: #b2b2b2;
+  background: #ffffff;
   border: 1px solid #b2b2b2;
-  color: var(--text-primary);
+  color: black;
   padding: 12px;
   border-radius: 8px;
   cursor: pointer;
@@ -286,7 +287,7 @@ body {
 
 /* ========== Session Info ========== */
 .session-info {
-  background: #989898;
+  background: white;
   padding: 15px;
   border-radius: 12px;
   margin-top: auto;
@@ -295,12 +296,12 @@ body {
 .session-info h4 {
   font-size: 14px;
   margin-bottom: 12px;
-  color: #f7f7f7;
+  color: black;
 }
 
 .session-info p {
   font-size: 13px;
-  color: #ffffff;
+  color: black;
   margin-bottom: 8px;
 }
 
@@ -311,8 +312,8 @@ body {
 .end-session-btn {
   width: 100%;
   background: transparent;
-  border: 1px solid var(--error);
-  color: var(--error);
+  border: 1px solid #4d44ef;
+  color: #5844ef;
   padding: 8px;
   border-radius: 8px;
   cursor: pointer;
@@ -343,7 +344,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #b2b2b2;
+  background: #ffffff;
 }
 
 .assistant-info {
@@ -376,7 +377,7 @@ body {
 
 .assistant-status {
   font-size: 12px;
-  color: var(--text-muted);
+  color: #000000;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -421,7 +422,7 @@ body {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  background-color: #b2b2b2;
+  background-color: #ffffff;
   gap: 16px;
 }
 
@@ -581,7 +582,7 @@ body {
 .suggested-prompts {
   padding: 15px 20px;
   border-top: 1px solid #9d9c9c;
-  background: #b2b2b2;
+  background: #ffffff;
 }
 
 .prompts-label {
